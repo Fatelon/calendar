@@ -1,0 +1,1 @@
+export { AppDestroyService } from './destroy.service';

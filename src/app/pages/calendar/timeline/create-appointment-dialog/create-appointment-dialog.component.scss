@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.appointment-dialog {
+  &__input-label {
+    margin-top: 1rem;
+    width: 100%;
+  }
+}

@@ -15,6 +15,11 @@
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
+    "paths": {
+      "@common/*": [
+        "./src/app/common/*"
+      ],
+    },
     "target": "ES2022",
     "module": "ES2022"
   },

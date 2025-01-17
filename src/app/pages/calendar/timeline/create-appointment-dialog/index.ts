@@ -1,0 +1,1 @@
+export { CreateAppointmentDialogComponent } from './create-appointment-dialog.component';

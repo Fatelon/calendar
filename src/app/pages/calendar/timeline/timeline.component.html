@@ -1,17 +1,17 @@
 <div class="timeline">
   <div class="timeline__grid">
     <div class="timeline__time-column">
-      @for (hour of hours.slice(0,-1); track hour) {
+      @for (hourData of hours.slice(0,-1); track hourData.hour) {
         <span class="timeline__time-label">
-          {{ hour }}
+          {{ hourData.label }}
         </span>
       }
     </div>
 
-    @for (i of weekDays; track 'col_' + i) {
+    @for (weekDay of weekDays; track 'col_' + weekDay) {
       <div class="timeline__day-column">
         @for (hour of hours; track hour) {
-          <div class="timeline__day-slot">
+          <div class="timeline__day-slot" (click)="onTimeSlotClick(weekDay, hour)">
           </div>
         }
       </div>
