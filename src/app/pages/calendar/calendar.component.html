@@ -1,0 +1,40 @@
+<div class="calendar">
+  <div class="calendar__header">
+    <button mat-button (click)="loadMonth(previousMonth)">Previous</button>
+    
+    <span class="calendar__title">{{ currentDate | date: 'MMMM yyyy' }}</span>
+    
+    <button mat-button (click)="loadMonth(nextMonth)">Next</button>
+  </div>
+
+  <div class="calendar__weekdays">
+    @for (day of weekDays; track day) {
+      <div class="calendar__weekday">
+        {{ day }}
+      </div>
+    }
+  </div>
+
+  <div class="calendar__grid">
+    @for (day of previousMonthDays; track day) {
+      <div class="calendar__day-container calendar__day-container--not-current-month">
+        <span class="calendar__day">{{ day.getDate() }}</span>
+      </div>
+    }
+
+    @for (day of daysInMonth; track day) {
+      <div class="calendar__day-container">
+        <span
+          class="calendar__day calendar__day--current-month"
+          [class.calendar__day--current-day]="isCurrentDay(day)"
+        >{{ day.getDate() }}</span>
+      </div>
+    }
+
+    @for (day of nextMonthDays; track day) {
+      <div class="calendar__day-container calendar__day-container--not-current-month">
+        <span class="calendar__day">{{ day.getDate() }}</span>
+      </div>
+    }
+  </div>
+</div>
