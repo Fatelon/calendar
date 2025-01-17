@@ -53,7 +53,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(var(--app-blue-2), 0.08);
+      background-color: var(--app-bg-light-blue);
     }
 
     &--current-month {
@@ -68,6 +68,12 @@
       &:hover {
         background-color: var(--app-blue-2);
       }
+    }
+
+    &--selected-day {
+      color: var(--app-blue-1);
+      font-size: large;
+      font-weight: bold;
     }
   }
 }

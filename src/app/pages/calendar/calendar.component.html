@@ -16,24 +16,26 @@
   </div>
 
   <div class="calendar__grid">
-    @for (day of previousMonthDays; track day) {
+    @for (day of previousMonthDays; track day.toISOString()) {
       <div class="calendar__day-container calendar__day-container--not-current-month">
-        <span class="calendar__day">{{ day.getDate() }}</span>
+        <span class="calendar__day" (click)="selectDay(day, false)">{{ day.getDate() }}</span>
       </div>
     }
 
-    @for (day of daysInMonth; track day) {
+    @for (day of daysInMonth; track day.toISOString()) {
       <div class="calendar__day-container">
         <span
           class="calendar__day calendar__day--current-month"
           [class.calendar__day--current-day]="isCurrentDay(day)"
+          [class.calendar__day--selected-day]="!isCurrentDay(day) && isSelectedDay(day)"
+          (click)="selectDay(day)"
         >{{ day.getDate() }}</span>
       </div>
     }
 
-    @for (day of nextMonthDays; track day) {
+    @for (day of nextMonthDays; track day.toISOString()) {
       <div class="calendar__day-container calendar__day-container--not-current-month">
-        <span class="calendar__day">{{ day.getDate() }}</span>
+        <span class="calendar__day" (click)="selectDay(day, false)">{{ day.getDate() }}</span>
       </div>
     }
   </div>

@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export default class CalendarComponent {
   protected currentDate: Date = new Date();
+  protected selectedDate: Date = new Date();
   protected previousMonthDays: Date[] = [];
   protected daysInMonth: Date[] = [];
   protected nextMonthDays: Date[] = [];
@@ -30,11 +31,19 @@ export default class CalendarComponent {
   }
 
   protected isCurrentDay(day: Date): boolean {
-    const today = new Date();
+    return this.isDaysEqual(day, new Date());
+  }
 
-    return day.getDate() === today.getDate() && 
-           day.getMonth() === today.getMonth() &&
-           day.getFullYear() === today.getFullYear();
+  protected isSelectedDay(day: Date): boolean {
+    return this.isDaysEqual(day, this.selectedDate);
+  }
+
+  protected selectDay(date: Date, isCurrentMonth = true): void {
+    this.selectedDate = date;
+
+    if (!isCurrentMonth) {
+      this.loadMonth(this.selectedDate);
+    }
   }
 
   protected loadMonth(date: Date): void {
@@ -59,5 +68,11 @@ export default class CalendarComponent {
     );
   
     this.currentDate = new Date(date.getFullYear(), date.getMonth(), 1);
+  }
+
+  private isDaysEqual(day1: Date, day2: Date): boolean {
+    return day1.getDate() === day2.getDate() && 
+           day1.getMonth() === day2.getMonth() &&
+           day1.getFullYear() === day2.getFullYear();
   }
 }
