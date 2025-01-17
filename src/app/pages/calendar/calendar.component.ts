@@ -1,8 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
+
+import * as weekUils from '@common/utils/week.utils';
+
 import { TimelineComponent } from './timeline';
+import { AppointmentService } from './services';
 
 @Component({
   selector: 'app-calendar',
@@ -12,6 +16,8 @@ import { TimelineComponent } from './timeline';
   imports: [DatePipe, MatButtonModule, TimelineComponent],
 })
 export default class CalendarComponent {
+  private readonly appointmentService: AppointmentService = inject(AppointmentService);
+  
   protected currentDate: Date = new Date();
   protected selectedDate: Date = new Date();
   protected previousMonthDays: Date[] = [];
@@ -40,34 +46,43 @@ export default class CalendarComponent {
   }
 
   protected selectDay(date: Date, isCurrentMonth = true): void {
+    if (this.isDaysEqual(date, this.selectedDate)) {
+      return;
+    }
+
     this.selectedDate = date;
 
     if (!isCurrentMonth) {
       this.loadMonth(this.selectedDate);
     }
+
+    this.appointmentService.setCurrentDate(this.selectedDate);
   }
 
   protected loadMonth(date: Date): void {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    const startDay = weekUils.START_OF_WEEK_DAY;
+    const diff = (firstDay >= startDay) ? firstDay - startDay : 7 - (startDay - firstDay);
     const lastDate = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const prevMonthLastDate = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-  
+    
     this.previousMonthDays = Array.from(
-      { length: firstDay },
-      (_, i) => new Date(date.getFullYear(), date.getMonth() - 1, prevMonthLastDate - firstDay + 1 + i)
+      { length: diff },
+      (_, i) => new Date(date.getFullYear(), date.getMonth() - 1, prevMonthLastDate - diff + 1 + i)
     );
-  
+    
     this.daysInMonth = Array.from(
       { length: lastDate },
       (_, i) => new Date(date.getFullYear(), date.getMonth(), i + 1)
     );
-  
+    
     const remainingDays = 7 - (this.previousMonthDays.length + this.daysInMonth.length) % 7;
+    
     this.nextMonthDays = Array.from(
       { length: remainingDays },
       (_, i) => new Date(date.getFullYear(), date.getMonth() + 1, i + 1)
     );
-  
+
     this.currentDate = new Date(date.getFullYear(), date.getMonth(), 1);
   }
 

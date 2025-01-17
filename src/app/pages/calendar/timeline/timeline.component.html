@@ -10,8 +10,14 @@
 
     @for (weekDay of weekDays; track 'col_' + weekDay) {
       <div class="timeline__day-column">
-        @for (hour of hours; track hour) {
-          <div class="timeline__day-slot" (click)="onTimeSlotClick(weekDay, hour)">
+        @for (hourData of hours; track hourData.hour) {
+          <div class="timeline__day-slot" (click)="onTimeSlotClick(weekDay, hourData)">
+            @if (findAppointment(weekDay, hourData.hour)) {
+              <app-appointment-card
+                [appointment]="findAppointment(weekDay, hourData.hour)"
+                (delete)="onDeleteAppointment($event)"
+              />
+            }
           </div>
         }
       </div>

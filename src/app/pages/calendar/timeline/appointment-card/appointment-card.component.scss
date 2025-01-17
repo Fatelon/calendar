@@ -1,0 +1,35 @@
+:host {
+  background-color: var(--app-bg-blue);
+  height: 100%;
+  width: 100%;
+}
+
+.appointment-card {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.2rem;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 80%;
+    overflow: hidden;
+  }
+
+  &__title {
+    font-size: 1em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__date {
+    font-size: 0.6em;
+  }
+
+  &__close {
+    color: var(--app-blue-1);
+    margin-right: auto;
+    cursor: pointer;
+  }
+}

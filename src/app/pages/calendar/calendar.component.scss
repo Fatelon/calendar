@@ -52,7 +52,7 @@
     border-radius: 50%;
     color: var(--app-gray-2);
     cursor: pointer;
-    font-size: medium;
+    font-size: 1em;
     transition: font-size 0.2s ease-in-out;
 
     &:hover {
@@ -75,7 +75,7 @@
 
     &--selected-day {
       color: var(--app-blue-1);
-      font-size: large;
+      font-size: 1.4em;
       font-weight: bold;
     }
   }

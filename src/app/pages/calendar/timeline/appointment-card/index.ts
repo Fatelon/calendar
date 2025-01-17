@@ -1,0 +1,1 @@
+export { AppointmentCardComponent } from './appointment-card.component';
