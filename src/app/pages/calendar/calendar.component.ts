@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +15,7 @@ import { AppointmentService } from './services';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe, MatButtonModule, TimelineComponent],
 })
-export default class CalendarComponent {
+export default class CalendarComponent implements OnInit {
   private readonly appointmentService: AppointmentService = inject(AppointmentService);
   
   protected currentDate: Date = new Date();

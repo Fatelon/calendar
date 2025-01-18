@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, mergeMap, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 
 import * as weekUtils from '@common/utils/week.utils';
 
@@ -30,7 +30,7 @@ export class AppointmentService {
       const weekEnd = weekUtils.getEndOfWeek(currentDate);
 
       weekEnd.setDate(weekEnd.getDate() + 1);
-      
+
       return appointments.filter(appointment => {
         const appointmentDate = new Date(appointment.date);
         

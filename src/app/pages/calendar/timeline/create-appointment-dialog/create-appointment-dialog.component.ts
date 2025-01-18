@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';``
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-create-appointment-dialog',
