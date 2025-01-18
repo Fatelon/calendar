@@ -14,7 +14,7 @@ import { CreateAppointmentDialogComponent } from './create-appointment-dialog';
 import { AppointmentCardComponent } from './appointment-card';
 import { IAppointment } from './interfaces';
 
-type IAppointmentsByDayHour = Record<number, Record<number, IAppointment[] | undefined>>;
+type TAppointmentsByDayHour = Record<number, Record<number, IAppointment[] | undefined>>;
 
 @Component({
   selector: 'app-timeline',
@@ -45,7 +45,7 @@ export class TimelineComponent {
         acc[day][hour].push(appointment); 
 
         return acc;
-      }, {} as IAppointmentsByDayHour)),
+      }, {} as TAppointmentsByDayHour)),
     )
   );
 
