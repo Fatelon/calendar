@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -23,10 +23,12 @@ export class CreateAppointmentDialogComponent {
   protected readonly date: Date = this.dialogData.date;
 
   protected readonly formGroup = this.formBuilder.group({
-    description: [null],
+    description: [null, [Validators.maxLength(20)]],
   });
 
-  protected onClose(): void {
-    this.dialogRef.close(this.formGroup.value.description);
+  protected onClose(withResult = false): void {
+    const description = this.formGroup.value.description || '(No description)';
+
+    this.dialogRef.close(withResult ? description : null);
   }
 }

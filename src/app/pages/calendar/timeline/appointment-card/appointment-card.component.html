@@ -5,7 +5,7 @@
     <span class="appointment-card__date">{{ appointment?.date | date: 'fullDate' }}</span>
   </div>
 
-  <div>
+  <div class="appointment-card__action-panel">
     <mat-icon class="appointment-card__close" (click)="onDelete($event)">delete</mat-icon>
   </div>
 </div> 

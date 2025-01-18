@@ -11,6 +11,13 @@ export class AppointmentService {
     { date: new Date('2025-01-12T08:00:00'), description: 'Meeting with Bob' },
     { date: new Date('2025-01-13T10:00:00'), description: 'Doctor Appointment' },
     { date: new Date('2025-01-15T14:00:00'), description: 'Lunch with Alice' },
+    { date: new Date('2025-01-16T06:30:00'), description: 'Project Review' },
+    { date: new Date('2025-01-17T02:30:00'), description: 'Team Meeting' },
+    { date: new Date('2025-01-18T01:00:00'), description: 'Call with Client' },
+    { date: new Date('2025-01-19T04:00:00'), description: 'Strategy Planning' },
+    { date: new Date('2025-01-20T06:00:00'), description: 'Design Review' },
+    { date: new Date('2025-01-21T02:00:00'), description: 'Development Sync' },
+    { date: new Date('2025-01-22T01:00:00'), description: 'Marketing Discussion' },
   ]);
   private currentDate$ = new BehaviorSubject<Date>(new Date());
 
@@ -22,6 +29,8 @@ export class AppointmentService {
       const weekStart = weekUtils.getStartOfWeek(currentDate);
       const weekEnd = weekUtils.getEndOfWeek(currentDate);
 
+      weekEnd.setDate(weekEnd.getDate() + 1);
+      
       return appointments.filter(appointment => {
         const appointmentDate = new Date(appointment.date);
         

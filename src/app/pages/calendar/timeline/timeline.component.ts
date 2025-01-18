@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { CdkDropListGroup, CdkDropList, CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { map, takeUntil } from 'rxjs';
@@ -24,7 +25,7 @@ interface IAppointmentsByDayHour {
   templateUrl: './timeline.component.html',
   styleUrl: './timeline.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatDialogModule, AppointmentCardComponent],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag, MatDialogModule, AppointmentCardComponent],
   providers: [AppDestroyService],
 })
 export class TimelineComponent {
@@ -77,6 +78,23 @@ export class TimelineComponent {
       });
   }
 
+  protected onDrop(event: CdkDragDrop<{ weekDay: number, hour: number }>): void {
+    const draggedAppointment = event.item.data;
+    const targetContainer = event.container;
+    const targetWeekDay = targetContainer.data.weekDay;
+    const targetHour = targetContainer.data.hour;
+    const targetDate = this.getUpdatedDate(draggedAppointment.date, targetWeekDay, targetHour);
+  
+    if (this.findAppointment(targetWeekDay, targetHour)) {
+      // Slot is already occupied. Appointment cannot be moved.
+      // TODO: Show a notification to the user or move an old appointment to another place.
+      return;
+    }
+  
+    this.appointmentService.deleteAppointment(draggedAppointment.date);
+    this.appointmentService.addAppointment({ ...draggedAppointment, date: targetDate });
+  }
+
   protected findAppointment(weekDay: number, hour: number): IAppointment | null {
     if (!this.appointmentsByDayHourSignal()) {
       return null;
@@ -88,5 +106,15 @@ export class TimelineComponent {
 
   protected onDeleteAppointment(appointment: IAppointment): void {
     this.appointmentService.deleteAppointment(appointment.date);
+  }
+
+  private getUpdatedDate(oldDate: Date, weekDay: number, targetHour: number): Date {
+    const newDate = new Date(oldDate);
+    const weekDayIndex = weekDay;
+  
+    newDate.setDate(oldDate.getDate() - oldDate.getDay() + weekDayIndex);
+    newDate.setHours(targetHour, 0, 0, 0);
+  
+    return newDate;
   }
 }

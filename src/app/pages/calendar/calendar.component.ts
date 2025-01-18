@@ -37,6 +37,15 @@ export default class CalendarComponent {
     this.loadMonth(this.currentDate);
   }
 
+  protected changeMonth(date: Date): void {
+    const today = new Date();
+    const newDate = date.getMonth() === today.getMonth() ? today : date;
+
+    this.selectedDate = newDate;
+    this.loadMonth(newDate);
+    this.appointmentService.setCurrentDate(newDate);
+  }
+
   protected isCurrentDay(day: Date): boolean {
     return this.isDaysEqual(day, new Date());
   }

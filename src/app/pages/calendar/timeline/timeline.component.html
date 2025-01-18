@@ -1,5 +1,5 @@
 <div class="timeline">
-  <div class="timeline__grid">
+  <div class="timeline__grid" cdkDropListGroup>
     <div class="timeline__time-column">
       @for (hourData of hours.slice(0,-1); track hourData.hour) {
         <span class="timeline__time-label">
@@ -11,12 +11,21 @@
     @for (weekDay of weekDays; track 'col_' + weekDay) {
       <div class="timeline__day-column">
         @for (hourData of hours; track hourData.hour) {
-          <div class="timeline__day-slot" (click)="onTimeSlotClick(weekDay, hourData)">
+          <div
+            class="timeline__day-slot"
+            (click)="onTimeSlotClick(weekDay, hourData)"
+            cdkDropList
+            [cdkDropListData]="{ weekDay: weekDay, hour: hourData.hour }"
+            (cdkDropListDropped)="onDrop($event)"
+          >
             @if (findAppointment(weekDay, hourData.hour)) {
               <app-appointment-card
                 [appointment]="findAppointment(weekDay, hourData.hour)"
+                (click)="$event.stopPropagation()"
                 (delete)="onDeleteAppointment($event)"
-              />
+                cdkDrag
+                [cdkDragData]="findAppointment(weekDay, hourData.hour)"
+              /> 
             }
           </div>
         }
